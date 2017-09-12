@@ -1,1 +1,1 @@
-docker build -t dicebox.trainingservice .
+docker build -t dicebox.primordialpool .

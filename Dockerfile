@@ -6,15 +6,10 @@ WORKDIR /app
 COPY ./app /app
 COPY ./dicebox/lib /app/lib
 
-# Environment Variables
-# ENV DD_INSTALL_ONLY true
-# ENV DD_API_KEY #############
-
 RUN pip install -r requirements.txt \
-    && useradd -M -U -u 1000 trainingservice \
-    && chown -R trainingservice /app
-#     && chown -R trainingservice /app \
-#    && chmod +x /app/install_agent.sh \
-#    && /app/install_agent.sh
+    && useradd -M -U -u 1000 primordialpool \
+    && chown -R primordialpool /app
 
-EXPOSE 80
+# CMD ["su", "-", "primordialpool", "-c", "python", "./sensory_service_batch_processor.py"]
+ENTRYPOINT ["python", "./primordialpool.py"]
+CMD ["su", "-", "primordialpool", "-c", "tail", "-f", "./logs/primordialpool.log"]
