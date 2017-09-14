@@ -6,7 +6,7 @@
 import logging
 from lib.optimizer import Optimizer
 from tqdm import tqdm
-import lib.dicebox_config as config
+import lib.docker_config as config
 
 
 # Setup logging.
