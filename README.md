@@ -35,6 +35,33 @@ Based on the defined hyper-parameters evolutionary optimization is employed to s
     python ./primordialpool.py
 ```
 
+### Production Deployment
+
+**Docker Container**
+
+The recommended way to run the service is by using the official provided docker container.
+The container should be deployed to a Docker Swarm as a service.
+
+**Example**
+```
+docker run \
+dicebox.primordialpool
+```
+
+How to apply rolling updates of the service within the swarm:
+```
+docker service update --image shapeandshare/dicebox.primordialpool:latest primordialpool
+```
+
+In the examples above the Docker Swarm was deployed to AWS and had the Cloudstor:aws plugin enabled and active.
+The sensory service containers will store and read data from the shared storage.
+
+**Global shared Cloudstor volumes mounted by all tasks in a swarm service.**
+
+The below command is an example of how to create the shared volume within the docker swarm:
+```
+docker volume create -d "cloudstor:aws" --opt backing=shared dicebox
+```
 
 References
 ----------
