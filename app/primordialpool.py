@@ -51,6 +51,11 @@ def get_average_accuracy(networks):
 
 
 def generate(generations, population, nn_param_choices, dataset):
+    logging.info('Generations: %s' % (generations))
+    logging.info('Population: %s' % (population))
+    logging.info('nn_param_choices: %s' % (nn_param_choices))
+    logging.info('Dataset: %s' % (dataset))
+
     """Generate a network with the genetic algorithm.
 
     Args:
