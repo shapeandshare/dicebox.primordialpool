@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 
 
-def train_networks(networks, dataset):
+def train_networks(networks):
     """Train each network.
 
     Args:
@@ -28,7 +28,7 @@ def train_networks(networks, dataset):
     """
     pbar = tqdm(total=len(networks))
     for network in networks:
-        network.train(dataset)
+        network.train()
         pbar.update(1)
     pbar.close()
 
@@ -50,11 +50,10 @@ def get_average_accuracy(networks):
     return total_accuracy / len(networks)
 
 
-def generate(generations, population, nn_param_choices, dataset):
+def generate(generations, population, nn_param_choices):
     logging.info('Generations: %s' % (generations))
     logging.info('Population: %s' % (population))
     logging.info('nn_param_choices: %s' % (nn_param_choices))
-    logging.info('Dataset: %s' % (dataset))
 
     """Generate a network with the genetic algorithm.
 
@@ -78,7 +77,7 @@ def generate(generations, population, nn_param_choices, dataset):
         logging.info('-' * 80)
 
         # Train and get accuracy for networks.
-        train_networks(networks, dataset)
+        train_networks(networks)
 
         # Get the average accuracy for this generation.
         average_accuracy = get_average_accuracy(networks)
@@ -121,7 +120,7 @@ def print_networks(networks):
 
 def main():
     logging.info("***Evolving %d generations with population %d***" % (config.GENERATIONS, config.POPULATION))
-    generate(config.GENERATIONS, config.POPULATION, config.NN_PARAM_CHOICES, config.DATASET)
+    generate(config.GENERATIONS, config.POPULATION, config.NN_PARAM_CHOICES)
 
 
 if __name__ == '__main__':

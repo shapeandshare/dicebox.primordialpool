@@ -1,5 +1,6 @@
-# https://hub.docker.com/r/tiangolo/uwsgi-nginx/
-FROM tiangolo/uwsgi-nginx:python2.7
+# FROM tensorflow/tensorflow:latest-gpu
+# FROM tensorflow/tensorflow
+FROM python:2.7
 
 WORKDIR /app
 
@@ -13,4 +14,4 @@ RUN pip install -r requirements.txt \
 
 # CMD ["su", "-", "primordialpool", "-c", "python", "./primordialpool.py"]
 ENTRYPOINT ["python", "./primordialpool.py"]
-CMD ["su", "-", "primordialpool", "-c", "tail", "-f", "./logs/primordialpool.log"]
+# CMD ["su", "-", "primordialpool", "-c", "tail", "-f", "./logs/primordialpool.log"]
