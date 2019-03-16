@@ -9,3 +9,4 @@ Change Log
 * Updated copyright dates
 * Added some additional logging to startup.
 * Excluded the virtual environment directory from git.
+* Updated core libraries
