@@ -10,3 +10,7 @@ Change Log
 * Added some additional logging to startup.
 * Excluded the virtual environment directory from git.
 * Updated core libraries
+
+03.17.2019
+----------
+* Updated core libraries
