@@ -14,3 +14,7 @@ Change Log
 03.17.2019
 ----------
 * Updated core libraries
+
+03.23.2019
+----------
+* Updated core libraries
