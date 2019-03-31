@@ -4,18 +4,41 @@
 
 """Entry point to evolving the neural network. Start here."""
 import logging
-from lib.optimizer import Optimizer
+import os
+import errno
 from tqdm import tqdm
-import lib.docker_config as config
+import dicebox.optimizer
+import dicebox.docker_config
 
 
+# Config
+config_file = './dicebox.config'
+CONFIG = dicebox.docker_config.DockerConfig(config_file)
+
+
+###############################################################################
+# Allows for easy directory structure creation
+# https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
+###############################################################################
+def make_sure_path_exists(path):
+    try:
+        if os.path.exists(path) is False:
+            os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
+
+
+###############################################################################
 # Setup logging.
+###############################################################################
+make_sure_path_exists(CONFIG.LOGS_DIR)
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
     level=logging.INFO,
     filemode='w',
-    filename="%s/primordialpool.log" % config.LOGS_DIR
+    filename="%s/primordialpool.%s.log" % (CONFIG.LOGS_DIR, os.uname()[1])
 )
 
 
@@ -64,7 +87,7 @@ def generate(generations, population, nn_param_choices):
         dataset (str): Dataset to use for training/evaluating
 
     """
-    optimizer = Optimizer(nn_param_choices)
+    optimizer = dicebox.optimizer.Optimizer(nn_param_choices)
     networks = optimizer.create_population(population)
 
     # Evolve the generation.
@@ -119,8 +142,8 @@ def print_networks(networks):
 
 
 def main():
-    logging.info("***Evolving %d generations with population %d***" % (config.GENERATIONS, config.POPULATION))
-    generate(config.GENERATIONS, config.POPULATION, config.NN_PARAM_CHOICES)
+    logging.info("***Evolving %d generations with population %d***" % (CONFIG.GENERATIONS, CONFIG.POPULATION))
+    generate(CONFIG.GENERATIONS, CONFIG.POPULATION, CONFIG.NN_PARAM_CHOICES)
 
 
 if __name__ == '__main__':
