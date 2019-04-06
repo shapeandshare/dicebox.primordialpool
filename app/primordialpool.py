@@ -7,13 +7,12 @@ import logging
 import os
 import errno
 from tqdm import tqdm
-import dicebox.optimizer
-import dicebox.docker_config
-
+from dicebox.config.dicebox_config import DiceboxConfig
+from dicebox.evolutionary_optimizer import EvolutionaryOptimizer
 
 # Config
 config_file = './dicebox.config'
-CONFIG = dicebox.docker_config.DockerConfig(config_file)
+CONFIG = DiceboxConfig(config_file)
 
 
 ###############################################################################
@@ -87,7 +86,7 @@ def generate(generations, population, nn_param_choices):
         dataset (str): Dataset to use for training/evaluating
 
     """
-    optimizer = dicebox.optimizer.Optimizer(nn_param_choices)
+    optimizer = EvolutionaryOptimizer(nn_param_choices)
     networks = optimizer.create_population(population)
 
     # Evolve the generation.

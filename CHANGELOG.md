@@ -24,3 +24,7 @@ Change Log
 * Updated core libraries
 * Refactored to support new core libraries
 * Updated docker build to account for new directory structure
+
+04.06.2019
+----------
+* Refactored to support namespace changes within the core libraries.
