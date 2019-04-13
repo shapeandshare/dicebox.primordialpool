@@ -5,7 +5,6 @@
 """Entry point to evolving the neural network. Start here."""
 import logging
 import os
-import errno
 from tqdm import tqdm
 import dicebox.utils.helpers as helpers
 from dicebox.config.dicebox_config import DiceboxConfig
