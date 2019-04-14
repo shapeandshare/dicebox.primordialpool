@@ -6,7 +6,8 @@ WORKDIR /app
 
 COPY ./app /app
 COPY ./dicebox/dicebox /app/dicebox
-COPY ./dicebox/dicebox.config /app
+COPY ./dicebox/config/dicebox.config /app
+COPY ./dicebox/config/dicebox.lonestar.json /app
 
 RUN pip install -r requirements.txt \
     && useradd -M -U -u 1000 primordialpool \

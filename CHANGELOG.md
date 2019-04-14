@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+0.1.1
+-----
+* Corrected locations of files to be copied during the docker build.
+
 0.1.0
 -----
 * Support for evolving networks with different layer lengths, types, and activation functions.
