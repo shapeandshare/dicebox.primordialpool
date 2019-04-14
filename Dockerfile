@@ -12,6 +12,5 @@ RUN pip install -r requirements.txt \
     && useradd -M -U -u 1000 primordialpool \
     && chown -R primordialpool /app
 
-# CMD ["su", "-", "primordialpool", "-c", "python", "./primordialpool.py"]
 ENTRYPOINT ["python", "./primordialpool.py"]
-# CMD ["su", "-", "primordialpool", "-c", "tail", "-f", "./logs/primordialpool.log"]
+
