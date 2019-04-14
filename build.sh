@@ -1,1 +1,1 @@
-docker build -t shapeandshare/dicebox.primordialpool:0.1.0 .
+docker build -t shapeandshare/dicebox.primordialpool:0.1.1 .
