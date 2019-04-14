@@ -5,8 +5,8 @@
 """Entry point to evolving the neural network. Start here."""
 import logging
 import os
-import errno
 from tqdm import tqdm
+import dicebox.utils.helpers as helpers
 from dicebox.config.dicebox_config import DiceboxConfig
 from dicebox.evolutionary_optimizer import EvolutionaryOptimizer
 
@@ -16,22 +16,9 @@ CONFIG = DiceboxConfig(config_file)
 
 
 ###############################################################################
-# Allows for easy directory structure creation
-# https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
-###############################################################################
-def make_sure_path_exists(path):
-    try:
-        if os.path.exists(path) is False:
-            os.makedirs(path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            raise
-
-
-###############################################################################
 # Setup logging.
 ###############################################################################
-make_sure_path_exists(CONFIG.LOGS_DIR)
+helpers.make_sure_path_exists(CONFIG.LOGS_DIR)
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
@@ -50,7 +37,7 @@ def train_networks(networks):
     """
     pbar = tqdm(total=len(networks))
     for network in networks:
-        network.train()
+        network.train_v2()
         pbar.update(1)
     pbar.close()
 
@@ -67,15 +54,14 @@ def get_average_accuracy(networks):
     """
     total_accuracy = 0
     for network in networks:
-        total_accuracy += network.accuracy
+        total_accuracy += network.accuracy_v2
 
     return total_accuracy / len(networks)
 
 
-def generate(generations, population, nn_param_choices):
+def generate(generations, population):
     logging.info('Generations: %s' % (generations))
     logging.info('Population: %s' % (population))
-    logging.info('nn_param_choices: %s' % (nn_param_choices))
 
     """Generate a network with the genetic algorithm.
 
@@ -86,7 +72,11 @@ def generate(generations, population, nn_param_choices):
         dataset (str): Dataset to use for training/evaluating
 
     """
-    optimizer = EvolutionaryOptimizer(nn_param_choices)
+    optimizer = EvolutionaryOptimizer(retain=0.4,
+                                      random_select=0.1,
+                                      mutate_chance=0.2,
+                                      config_file='./dicebox.config',
+                                      lonestar_model_file='./dicebox.lonestar.json')
     networks = optimizer.create_population(population)
 
     # Evolve the generation.
@@ -111,7 +101,7 @@ def generate(generations, population, nn_param_choices):
         logging.info('Top 5 individuals in current generation')
 
         # Sort our final population.
-        current_networks = sorted(networks, key=lambda x: x.accuracy, reverse=True)
+        current_networks = sorted(networks, key=lambda x: x.accuracy_v2, reverse=True)
 
         # Print out the top 5 networks.
         print_networks(current_networks[:5])
@@ -122,7 +112,7 @@ def generate(generations, population, nn_param_choices):
             networks = optimizer.evolve(networks)
 
     # Sort our final population.
-    networks = sorted(networks, key=lambda x: x.accuracy, reverse=True)
+    networks = sorted(networks, key=lambda x: x.accuracy_v2, reverse=True)
 
     # Print out the top 5 networks.
     print_networks(networks[:5])
@@ -137,12 +127,12 @@ def print_networks(networks):
     """
     logging.info('-'*80)
     for network in networks:
-        network.print_network()
+        network.print_network_v2()
 
 
 def main():
     logging.info("***Evolving %d generations with population %d***" % (CONFIG.GENERATIONS, CONFIG.POPULATION))
-    generate(CONFIG.GENERATIONS, CONFIG.POPULATION, CONFIG.NN_PARAM_CHOICES)
+    generate(CONFIG.GENERATIONS, CONFIG.POPULATION)
 
 
 if __name__ == '__main__':
