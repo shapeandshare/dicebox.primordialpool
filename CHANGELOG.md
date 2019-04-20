@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+0.2.0
+-----
+* Pass a to-be-used external model reference when creating config object.
+
 0.1.1
 -----
 * Corrected locations of files to be copied during the docker build.
