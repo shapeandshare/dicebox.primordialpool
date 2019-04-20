@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.3.0
+-----
+* Removed extra file
+* Added version info to startup message
+
 0.2.0
 -----
 * Pass a to-be-used external model reference when creating config object.

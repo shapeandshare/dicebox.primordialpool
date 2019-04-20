@@ -2,6 +2,8 @@
 # Derived source copyright: Matt Harvey, 2017, Derived source license: The MIT License
 # See docs/Matt Harvey.LICENSE
 
+VERSION = '0.3.0'
+
 """Entry point to evolving the neural network. Start here."""
 import logging
 import os
@@ -132,6 +134,7 @@ def print_networks(networks):
 
 
 def main():
+    logging.info("Application Version (%s), Dicebox API Version: (%s)", VERSION, CONFIG.API_VERSION)
     logging.info("***Evolving %d generations with population %d***" % (CONFIG.GENERATIONS, CONFIG.POPULATION))
     generate(CONFIG.GENERATIONS, CONFIG.POPULATION)
 
