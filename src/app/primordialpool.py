@@ -14,7 +14,7 @@ from shapeandshare.dicebox.core import EvolutionaryOptimizer
 from shapeandshare.dicebox.core.utils import make_sure_path_exists
 
 # Config
-config_file = './dicebox.config'
+config_file = 'dicebox.config'
 lonestar_model_file = './dicebox.lonestar.json'
 CONFIG = DiceboxConfig(config_file, lonestar_model_file)
 
@@ -40,7 +40,7 @@ def train_networks(networks):
     """
     pbar = tqdm(total=len(networks))
     for network in networks:
-        network.train_v2()
+        network.train()
         pbar.update(1)
     pbar.close()
 
@@ -57,7 +57,7 @@ def get_average_accuracy(networks):
     """
     total_accuracy = 0
     for network in networks:
-        total_accuracy += network.accuracy_v2
+        total_accuracy += network.accuracy
 
     return total_accuracy / len(networks)
 
@@ -104,7 +104,7 @@ def generate(generations, population):
         logging.info('Top 5 individuals in current generation')
 
         # Sort our final population.
-        current_networks = sorted(networks, key=lambda x: x.accuracy_v2, reverse=True)
+        current_networks = sorted(networks, key=lambda x: x.accuracy, reverse=True)
 
         # Print out the top 5 networks.
         print_networks(current_networks[:5])
@@ -115,7 +115,7 @@ def generate(generations, population):
             networks = optimizer.evolve(networks)
 
     # Sort our final population.
-    networks = sorted(networks, key=lambda x: x.accuracy_v2, reverse=True)
+    networks = sorted(networks, key=lambda x: x.accuracy, reverse=True)
 
     # Print out the top 5 networks.
     print_networks(networks[:5])
@@ -130,7 +130,7 @@ def print_networks(networks):
     """
     logging.info('-' * 80)
     for network in networks:
-        network.print_network_v2()
+        network.print_network()
 
 
 def main():
