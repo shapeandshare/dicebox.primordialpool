@@ -1,15 +1,15 @@
 # FROM tensorflow/tensorflow:latest-gpu
 # FROM tensorflow/tensorflow
-FROM python:2.7
+FROM python:3.7
 
-WORKDIR /app
+WORKDIR .
 
-COPY ./app /app
-COPY ./dicebox/dicebox /app/dicebox
-COPY ./dicebox/config/dicebox.config /app
-COPY ./dicebox/config/dicebox.lonestar.json /app
+COPY ./src/app /app
+COPY requirements.txt /app
+COPY dicebox.config /app
+COPY dicebox.lonestar.json /app
 
-RUN pip install -r requirements.txt \
+RUN pip install -r /app/requirements.txt \
     && useradd -M -U -u 1000 primordialpool \
     && chown -R primordialpool /app
 

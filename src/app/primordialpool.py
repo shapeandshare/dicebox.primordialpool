@@ -2,26 +2,26 @@
 # Derived source copyright: Matt Harvey, 2017, Derived source license: The MIT License
 # See docs/Matt Harvey.LICENSE
 
-VERSION = '0.3.0'
+VERSION = '0.4.0'
 
 """Entry point to evolving the neural network. Start here."""
 import logging
 import os
 from tqdm import tqdm
-import dicebox.utils.helpers as helpers
-from dicebox.config.dicebox_config import DiceboxConfig
-from dicebox.evolutionary_optimizer import EvolutionaryOptimizer
+
+from shapeandshare.dicebox.core.config import DiceboxConfig
+from shapeandshare.dicebox.core import EvolutionaryOptimizer
+from shapeandshare.dicebox.core.utils import make_sure_path_exists
 
 # Config
 config_file = './dicebox.config'
 lonestar_model_file = './dicebox.lonestar.json'
 CONFIG = DiceboxConfig(config_file, lonestar_model_file)
 
-
 ###############################################################################
 # Setup logging.
 ###############################################################################
-helpers.make_sure_path_exists(CONFIG.LOGS_DIR)
+make_sure_path_exists(CONFIG.LOGS_DIR)
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
@@ -86,7 +86,7 @@ def generate(generations, population):
     for i in range(generations):
         logging.info("***Doing generation %d of %d***" %
                      (i + 1, generations))
-        logging.info('-'*80)
+        logging.info('-' * 80)
         logging.info('Individuals in current generation')
         print_networks(networks)
         logging.info('-' * 80)
@@ -99,7 +99,7 @@ def generate(generations, population):
 
         # Print out the average accuracy each generation.
         logging.info("Generation average: %.2f%%" % (average_accuracy * 100))
-        logging.info('-'*80)
+        logging.info('-' * 80)
 
         logging.info('Top 5 individuals in current generation')
 
@@ -128,7 +128,7 @@ def print_networks(networks):
         networks (list): The population of networks
 
     """
-    logging.info('-'*80)
+    logging.info('-' * 80)
     for network in networks:
         network.print_network_v2()
 

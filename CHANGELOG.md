@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+0.4.0 (07/04/2020)
+-----
+- Updated for Python 3.7
+
 0.3.0
 -----
 * Removed extra file
