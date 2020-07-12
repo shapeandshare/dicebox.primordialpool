@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+0.5.0
+-----
+- Update for v3 of core libraries.
+
 0.4.0 (07/04/2020)
 -----
 - Updated for Python 3.7

@@ -1,2 +1,2 @@
-shapeandshare-dicebox-core==2.1.1
-tqdm==4.47.0
+shapeandshare-dicebox-core==3.0.0
+
